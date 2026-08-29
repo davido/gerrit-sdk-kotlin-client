@@ -1,0 +1,21 @@
+module(
+    name = "gerrit_sdk_kotlin_client",
+    version = "0.0.0",
+)
+
+bazel_dep(name = "rules_kotlin", version = "2.4.10")
+bazel_dep(name = "rules_jvm_external", version = "7.1")
+bazel_dep(name = "rules_java", version = "9.9.0")
+
+maven = use_extension("@rules_jvm_external//:extensions.bzl", "maven")
+
+# Fetch the Gerrit Kotlin SDK from JitPack (which builds the tag via Gradle on demand).
+# The Kotlin SDK's tag built cleanly on the first try, so we pin the tag directly.
+maven.install(
+    artifacts = ["com.github.davido:gerrit-sdk-kotlin:v3.15.0-SNAPSHOT"],
+    repositories = [
+        "https://jitpack.io",
+        "https://repo1.maven.org/maven2",
+    ],
+)
+use_repo(maven, "maven")

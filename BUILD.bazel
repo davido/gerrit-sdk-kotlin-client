@@ -1,0 +1,8 @@
+load("@rules_kotlin//kotlin:jvm.bzl", "kt_jvm_binary")
+
+kt_jvm_binary(
+    name = "get-change-detail",
+    srcs = ["GetChangeDetail.kt"],
+    main_class = "GetChangeDetailKt",
+    deps = ["@maven//:com_github_davido_gerrit_sdk_kotlin"],
+)
