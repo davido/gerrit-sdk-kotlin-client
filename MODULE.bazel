@@ -12,7 +12,7 @@ maven = use_extension("@rules_jvm_external//:extensions.bzl", "maven")
 # Fetch the Gerrit Kotlin SDK from JitPack (which builds the tag via Gradle on demand).
 # The Kotlin SDK's tag built cleanly on the first try, so we pin the tag directly.
 maven.install(
-    artifacts = ["com.github.davido:gerrit-sdk-kotlin:2ce50ab"],
+    artifacts = ["com.github.davido:gerrit-sdk-kotlin:7e1535d"],
     repositories = [
         "https://jitpack.io",
         "https://repo1.maven.org/maven2",
