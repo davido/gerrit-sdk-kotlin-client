@@ -9,8 +9,8 @@ bazel_dep(name = "rules_java", version = "9.9.0")
 
 maven = use_extension("@rules_jvm_external//:extensions.bzl", "maven")
 
-# Fetch the Gerrit Kotlin SDK from JitPack (which builds the tag via Gradle on demand).
-# The Kotlin SDK's tag built cleanly on the first try, so we pin the tag directly.
+# Fetch the Gerrit Kotlin SDK from JitPack (which builds the commit via Gradle on demand).
+# We pin a specific commit SHA (exactly like the Java client), so the resolution is stable.
 maven.install(
     artifacts = ["com.github.davido:gerrit-sdk-kotlin:f4f9b76"],
     repositories = [

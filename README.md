@@ -11,7 +11,7 @@ This is the Bazel-consumption half of the Kotlin story: exactly how a **Gerrit p
 
 ```
   gerrit-sdk-kotlin      JitPack                    this repo (Bazel)
-  (Gradle SDK)    -->    builds tag -> Maven   -->  rules_jvm_external / maven.install
+  (Gradle SDK)    -->    builds commit -> Maven -->  rules_jvm_external / maven.install
                         artifact on demand         -> kt_jvm_binary get-change-detail
 ```
 
@@ -41,15 +41,16 @@ examples.
 
 ## Wiring
 
-`MODULE.bazel` (pins the **tag** — the Kotlin SDK's tag built cleanly on JitPack the
-first try, unlike the Java client which had to pin a commit around a cached failure):
+`MODULE.bazel` pins the SDK to a specific **commit SHA** on JitPack (exactly like the
+Java client) — see that file for the authoritative `bazel_dep` versions and the pinned
+`com.github.davido:gerrit-sdk-kotlin` coordinate. In outline:
 ```python
-bazel_dep(name = "rules_kotlin", version = "2.4.10")
-bazel_dep(name = "rules_jvm_external", version = "7.1")
-bazel_dep(name = "rules_java", version = "9.9.0")
+bazel_dep(name = "rules_kotlin", version = "...")
+bazel_dep(name = "rules_jvm_external", version = "...")
+bazel_dep(name = "rules_java", version = "...")
 
 maven.install(
-    artifacts = ["com.github.davido:gerrit-sdk-kotlin:v3.15.0-SNAPSHOT"],
+    artifacts = ["com.github.davido:gerrit-sdk-kotlin:<commit-sha>"],
     repositories = ["https://jitpack.io", "https://repo1.maven.org/maven2"],
 )
 ```
