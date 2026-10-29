@@ -1,0 +1,38 @@
+name: CI
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # The Gerrit SDK generator is Java-based and invoked via npx, so make both
+      # a Node runtime and a JDK available even though this thin client only
+      # consumes the already-published SDK.
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      # This repo's own toolchain: Bazel, pinned via .bazelversion (bazelisk reads it).
+      - name: Set up Bazel
+        uses: bazel-contrib/setup-bazel@0.15.0
+        with:
+          bazelisk-cache: true
+          repository-cache: true
+
+      # Builds the example against its pinned SDK coordinate. This depends on the
+      # pinned SDK (com.github.davido:gerrit-sdk-kotlin) resolving from JitPack, which
+      # builds the commit into a Maven artifact on demand, plus its okhttp/gson/
+      # kotlin-stdlib transitive deps from Maven Central.
+      - name: Build
+        run: bazel build //...
