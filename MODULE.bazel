@@ -12,7 +12,7 @@ maven = use_extension("@rules_jvm_external//:extensions.bzl", "maven")
 # Fetch the Gerrit Kotlin SDK from JitPack (which builds the commit via Gradle on demand).
 # We pin a specific commit SHA (exactly like the Java client), so the resolution is stable.
 maven.install(
-    artifacts = ["com.github.davido:gerrit-sdk-kotlin:f4f9b76"],
+    artifacts = ["com.github.davido:gerrit-sdk-kotlin:96829ea"],
     repositories = [
         "https://jitpack.io",
         "https://repo1.maven.org/maven2",
