@@ -3,10 +3,10 @@
 A standalone **Bazel** consumer of the generated Gerrit Kotlin SDK
 ([`davido/gerrit-sdk-kotlin`](https://github.com/davido/gerrit-sdk-kotlin)), fetched
 **from JitPack** via `rules_jvm_external` / `maven.install` and built with
-`rules_kotlin`. It implements a colored, Web-UI-style `get-change-detail` — the Kotlin
-twin of the Rust/Go/Python/TypeScript/Java examples — using only the generated SDK code.
+`rules_kotlin`. It implements a colored, Web-UI-style `get-change-detail`, the Kotlin
+twin of the Rust/Go/Python/TypeScript/Java examples, using only the generated SDK code.
 
-This is the Bazel-consumption half of the Kotlin story: exactly how a **Gerrit plugin**
+This is the Bazel-consumption half of the Kotlin story. It shows how a **Gerrit plugin**
 (itself a Bazel project) would depend on the SDK.
 
 ```
@@ -15,12 +15,11 @@ This is the Bazel-consumption half of the Kotlin story: exactly how a **Gerrit p
                         artifact on demand         -> kt_jvm_binary get-change-detail
 ```
 
-## Run it (this is the test)
+## Run it
 
-No global toolchain needed — `bazelisk` bootstraps Bazel 9.2.0, `rules_kotlin`, and the
-JDK 21 toolchain; the SDK is pulled from JitPack on first run. The command *is* the
-end-to-end test: it proves the JitPack-built Kotlin artifact compiles and runs against a
-live Gerrit.
+No global toolchain needed. `bazelisk` bootstraps Bazel 9.2.0, `rules_kotlin`, and the
+JDK 21 toolchain, and the SDK is pulled from JitPack on first run. The command proves
+that the JitPack-built Kotlin artifact compiles and runs against a live Gerrit.
 
 ```bash
 bazelisk run //:get-change-detail -- --change 622261
@@ -36,13 +35,13 @@ it against a live Gerrit. The `)]}'` XSSI guard is stripped by the SDK's
 `GerritXssiInterceptor` (`GerritXssiInterceptor.client()`).
 
 Expected: a colored change summary (status badge, owner/author, submit requirements,
-votes, files) — byte-for-byte the same layout as the Rust/Go/Python/TypeScript/Java
+votes, files), byte-for-byte the same layout as the Rust/Go/Python/TypeScript/Java
 examples.
 
 ## Wiring
 
 `MODULE.bazel` pins the SDK to a specific **commit SHA** on JitPack (exactly like the
-Java client) — see that file for the authoritative `bazel_dep` versions and the pinned
+Java client). See that file for the authoritative `bazel_dep` versions and the pinned
 `com.github.davido:gerrit-sdk-kotlin` coordinate. In outline:
 ```python
 bazel_dep(name = "rules_kotlin", version = "...")
@@ -67,8 +66,7 @@ kt_jvm_binary(
 )
 ```
 
-`.bazelrc` sets the Java language level to 21 (Gerrit's level). `MODULE.bazel.lock` is
-committed for a reproducible resolution.
+`.bazelrc` sets the Java language level to 21 (Gerrit's level).
 
 ## License
 

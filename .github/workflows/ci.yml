@@ -9,14 +9,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v7
 
-      # The Gerrit SDK generator is Java-based and invoked via npx, so make both
-      # a Node runtime and a JDK available even though this thin client only
-      # consumes the already-published SDK.
-      - name: Set up Node
-        uses: actions/setup-node@v7
-        with:
-          node-version: '26'
-
+      # This client only builds the example against the pre-built JitPack SDK
+      # artifact. It never runs the SDK generator, so no Node runtime is needed.
       - name: Set up JDK
         uses: actions/setup-java@v6
         with:
